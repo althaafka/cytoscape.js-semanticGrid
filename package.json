@@ -1,0 +1,23 @@
+{
+  "name": "cytoscape.js-semanticgrid",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/althaafka/cytoscape.js-semanticGrid.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/althaafka/cytoscape.js-semanticGrid/issues"
+  },
+  "homepage": "https://github.com/althaafka/cytoscape.js-semanticGrid#readme",
+  "dependencies": {
+    "cytoscape": "^3.31.2"
+  }
+}

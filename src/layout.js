@@ -1,7 +1,7 @@
 import cytoscape from 'cytoscape';
 import cola from 'cytoscape-cola';
 import { createLabels, createLines } from './utils';
-import Grid from './class/grid';
+import Grid from './grid';
 
 cytoscape.use(cola);
 
@@ -27,35 +27,19 @@ SemanticGridLayout.prototype.run = function() {
 
   const layoutPromises = [];
 
-  Object.entries(grid.cells).forEach(([_, yCells]) => {
-    Object.entries(yCells).reverse().forEach(([_, cell]) => {
-      layoutPromises.push(this.runLayout(cell, options, grid));
-    });
-  });
+  grid.forEachCell(cell => {
+    layoutPromises.push(this.runLayout(cell, options, grid));
+  })
 
   Promise.all(layoutPromises).then(() => {
     grid.updateCellsPosition()
 
-    Object.entries(grid.cells).forEach(([_, yCells]) => {
-      Object.entries(yCells).forEach(([_, cell]) => {
-        const eles = cy.collection(cell.nodes);
-        const bounds = eles.boundingBox();
-      
-        const dx = cell.position.x - bounds.x1 + options.xPadding;
-        const dy = cell.position.y - bounds.y1 + options.yPadding;
-      
-        eles.positions(node => {
-          const pos = node.position();
-          return {
-            x: pos.x + dx,
-            y: pos.y + dy
-          };
-        });
-      });
-    });
-
-
     cy.batch(() => {
+
+      grid.forEachCell(cell => {
+        this.shiftNodesToCell(cell,options)
+      })
+
       this.removeExistingGridElements();
 
       if (options.showGridLabels) {
@@ -110,7 +94,22 @@ SemanticGridLayout.prototype.runLayout = function(cell, options, grid) {
   });
 };
 
+SemanticGridLayout.prototype.shiftNodesToCell = function(cell, options) {
+  const cy = this.options.cy;
+  const eles = cy.collection(cell.nodes);
+  const bounds = eles.boundingBox();
 
+  const dx = cell.position.x - bounds.x1 + options.xPadding;
+  const dy = cell.position.y - bounds.y1 + options.yPadding;
+
+  eles.positions(node => {
+    const pos = node.position();
+    return {
+      x: pos.x + dx,
+      y: pos.y + dy
+    };
+  });
+}
 
 // Remove existing grid elements
 SemanticGridLayout.prototype.removeExistingGridElements = function() {
@@ -121,24 +120,22 @@ SemanticGridLayout.prototype.removeExistingGridElements = function() {
 SemanticGridLayout.prototype.addGridLabels = function(xCategories, yCategories, options, grid) {
   const cy = this.options.cy;
 
-  let totalHeight = 0;
-  Object.keys(grid.sizeMatrix[xCategories[0]]).forEach((col) => {
-      totalHeight += grid.sizeMatrix[xCategories[0]][col].height;
-  })
-  totalHeight = grid.cells[xCategories[0]][yCategories[yCategories.length-1]].position.y + grid.cells[xCategories[0]][yCategories[yCategories.length-1]].size.height
+  const totalHeight = grid.getTotalHeight()
 
   xCategories.forEach((cat, xIndex) => {
+    const cell = grid.getCell(cat, undefined)
     const position = {
-      x: grid.cells[cat][yCategories[0]].position.x + (grid.cells[cat][yCategories[0]].size.width) /2,
+      x: cell.position.x + (cell.size.width) /2,
       y: totalHeight + 30
     }
     cy.add(createLabels(`x-label-${xIndex}`, cat, position))
   })
 
   yCategories.forEach((cat, yIndex) => {
+    const cell = grid.getCell(undefined, cat)
     const position = {
       x: -100,
-      y: grid.cells[xCategories[0]][cat].position.y + ((grid.cells[xCategories[0]][cat].size.height) / 2)
+      y: cell.position.y + (cell.size.height/2)
     }
     cy.add(createLabels(`y-label-${yIndex}`, cat, position))
   })
@@ -191,7 +188,7 @@ SemanticGridLayout.prototype.addGridLines = function(xCategories, yCategories, o
 
   // Add vertical grid lines
   xCategories.forEach((xCat, xIndex) => {
-    const xPos = grid.cells[xCat][yCategories[0]].position.x;
+    const xPos = grid.getCell(xCat, undefined).position.x;
 
     cy.add(
       createLines(
@@ -205,15 +202,12 @@ SemanticGridLayout.prototype.addGridLines = function(xCategories, yCategories, o
 
   });
 
-  let totalWidth = 0;
-  Object.keys(grid.sizeMatrix).forEach((row) => {
-      totalWidth += grid.sizeMatrix[row][yCategories[0]].width;
-  });
+  let totalWidth = grid.getTotalWidth()
 
   // Add horizontal grid lines
   yCategories.forEach((yCat, yIndex) => {
     const cell = grid.cells[xCategories[0]][yCat];
-    const yPos = cell.position.y  + cell.size.height;
+    const yPos = cell.position.y + cell.size.height;
 
     cy.add(
       createLines(

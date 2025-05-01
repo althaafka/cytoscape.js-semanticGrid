@@ -1,5 +1,15 @@
-import Cell from './cell.js'
-import { getNodeCategory } from '../utils.js';
+import { getNodeCategory } from './utils.js';
+
+class Cell {
+    constructor(xCategory, yCategory) {
+        this.xCategory = xCategory;
+        this.yCategory = yCategory;
+        this.position = { x: 0, y: 0 };
+        this.size = { width: 0, height: 0 };
+        this.nodes = [];
+    }
+    
+}
 
 export default class Grid {
     constructor(options) {
@@ -43,6 +53,38 @@ export default class Grid {
         });
 
         return Array.from(categories);
+    }
+
+    forEachCell(callback) {
+        Object.entries(this.cells).forEach(([xCat, yCells]) => {
+            Object.entries(yCells).forEach(([yCat, cell]) => {
+                callback(cell, xCat, yCat);
+            });
+        });
+    }
+
+    getTotalHeight() {
+        let totalHeight = 0;
+        Object.keys(this.sizeMatrix[this.xCategories[0]]).forEach((col) => {
+            totalHeight += this.sizeMatrix[this.xCategories[0]][col].height;
+        })
+
+        return totalHeight
+    }
+
+    getTotalWidth() {
+        let totalWidth = 0
+        Object.keys(this.sizeMatrix).forEach((row) => {
+            totalWidth += this.sizeMatrix[row][this.yCategories[0]].width;
+        });
+
+        return totalWidth
+    }
+
+    getCell(x = undefined, y = undefined) {
+        let categoryX = x? x : this.xCategories[0];
+        let categoryY = y? y : this.yCategories[0];
+        return this.cells[categoryX][categoryY]
     }
 
     getCellSizeMatrix() {

@@ -2,7 +2,7 @@
   "name": "cytoscape.js-semanticgrid",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/layout.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,6 +18,10 @@
   },
   "homepage": "https://github.com/althaafka/cytoscape.js-semanticGrid#readme",
   "dependencies": {
-    "cytoscape": "^3.31.2"
+    "cytoscape": "^3.31.2",
+    "cytoscape-cola": "^2.5.1"
+  },
+  "devDependencies": {
+    "vite": "^6.3.3"
   }
 }

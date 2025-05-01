@@ -34,7 +34,8 @@
             "properties": {
                 "roleStereotype": "Coordinator",
                 "dependencyProfile": "Inbound"
-            }
+            },
+            "parent": "nodeParent"
           }
         },
         {
@@ -51,7 +52,7 @@
         },
         {
           "data": {
-            "id": "nodeE",
+            "id": "nodeEkurkereruerueruo",
             "labels": [
               "Structure"
             ],
@@ -63,7 +64,7 @@
         },
         {
           "data": {
-            "id": "nodeF",
+            "id": "nodeFufufafaf",
             "labels": [
               "Structure"
             ],
@@ -87,18 +88,6 @@
         },
         {
           "data": {
-            "id": "nodeAnomaliiii",
-            "labels": [
-              "Structure"
-            ],
-            "properties": {
-                "roleStereotype": "Coordinator",
-                "dependencyProfile": "Inbound"
-            }
-          }
-        },
-        {
-          "data": {
             "id": "nodeH",
             "labels": [
               "Structure"
@@ -111,13 +100,68 @@
         },
         {
           "data": {
-            "id": "nodeI",
+            "id": "nodeJiahahah",
             "labels": [
               "Structure"
             ],
             "properties": {
-                "roleStereotype": "Coordinator",
-                "dependencyProfile": "Inbound"
+                "roleStereotype": "Controller",
+                "dependencyProfile": "Transit"
+            }
+          }
+        },
+        {
+          "data": {
+            "id": "nodeK",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Controller",
+                "dependencyProfile": "Transit"
+            },
+            "parent": "nodeParent"
+          }
+        },
+        {
+          "data": {
+            "id": "nodeL",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Controller",
+                "dependencyProfile": "Transit"
+            }
+          }
+        },
+        {
+          "data": {
+            "id": "nodeUnknown",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+            }
+          }
+        },
+        {
+          "data": {
+            "id": "nodeUnknown2",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+            }
+          }
+        },
+        {
+          "data": {
+            "id": "nodeParent",
+            "labels": [
+              "Container"
+            ],
+            "properties": {
             }
           }
         }
@@ -149,7 +193,16 @@
               "target": "nodeC",
               "properties": {}
             }
-        }
+        },
+        {
+          "data": {
+            "id": "edge4",
+            "label": "calls",
+            "source": "nodeG",
+            "target": "nodeD",
+            "properties": {}
+          }
+      }
       ]
     }
   }

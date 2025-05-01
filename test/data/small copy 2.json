@@ -1,0 +1,325 @@
+{
+    "elements": {
+      "nodes": [
+        {
+          "data": {
+            "id": "nodeA",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Controller",
+                "dependencyProfile": "Outbound"
+            }
+          }
+        },
+        {
+          "data": {
+            "id": "nodeB",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Coordinator",
+                "dependencyProfile": "Transit"
+            }
+          }
+        },
+        {
+          "data": {
+            "id": "nodeC",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Coordinator",
+                "dependencyProfile": "Inbound"
+            },
+            "parent": "nodeParent"
+          }
+        },
+        {
+          "data": {
+            "id": "nodeD",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Service",
+                "dependencyProfile": "Inbound"
+            }
+          }
+        },
+        {
+          "data": {
+            "id": "nodeEkurkereruerueruo",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Coordinator",
+                "dependencyProfile": "Inbound"
+            }
+          }
+        },
+        {
+          "data": {
+            "id": "nodeFufufafaf",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Coordinator",
+                "dependencyProfile": "Inbound"
+            }
+          }
+        },
+        {
+          "data": {
+            "id": "nodeG",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Coordinator",
+                "dependencyProfile": "Inbound"
+            }
+          }
+        },
+        {
+          "data": {
+            "id": "nodeH",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Coordinator",
+                "dependencyProfile": "Inbound"
+            }
+          }
+        },
+        {
+          "data": {
+            "id": "nodeJiahahah",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Controller",
+                "dependencyProfile": "Transit"
+            }
+          }
+        },
+        {
+          "data": {
+            "id": "nodeK",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Controller",
+                "dependencyProfile": "Transit"
+            },
+            "parent": "nodeParent"
+          }
+        },
+        {
+          "data": {
+            "id": "nodeL",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Controller",
+                "dependencyProfile": "Transit"
+            }
+          }
+        },
+        {
+          "data": {
+            "id": "nodeOala",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Controller",
+                "dependencyProfile": "Transit"
+            }
+          }
+        },
+        {
+          "data": {
+            "id": "nodeN",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Controller",
+                "dependencyProfile": "Transit"
+            }
+          }
+        },
+        {
+          "data": {
+            "id": "nodeM",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Controller",
+                "dependencyProfile": "Transit"
+            }
+          }
+        },
+        {
+          "data": {
+            "id": "nodeT",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Controller",
+                "dependencyProfile": "Transit"
+            }
+          }
+        },        
+        {
+          "data": {
+            "id": "nodeS",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Controller",
+                "dependencyProfile": "Transit"
+            }
+          }
+        },
+        {
+          "data": {
+            "id": "nodeR",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Controller",
+                "dependencyProfile": "Transit"
+            }
+          }
+        },      
+        {
+          "data": {
+            "id": "nodeQgthfghdsfsdgsgsdfsdfsdfgnrt",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Controller",
+                "dependencyProfile": "Transit"
+            }
+          }
+        },      
+        {
+          "data": {
+            "id": "nodeW",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Controller",
+                "dependencyProfile": "Transit"
+            }
+          }
+        },      
+        {
+          "data": {
+            "id": "nodeU",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Controller",
+                "dependencyProfile": "Transit"
+            }
+          }
+        },      
+        {
+          "data": {
+            "id": "nodeT",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Controller",
+                "dependencyProfile": "Transit"
+            }
+          }
+        },      
+        {
+          "data": {
+            "id": "nodeS",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Controller",
+                "dependencyProfile": "Transit"
+            }
+          }
+        },      
+        {
+          "data": {
+            "id": "nodeR",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Controller",
+                "dependencyProfile": "Transit"
+            }
+          }
+        },      
+        {
+          "data": {
+            "id": "nodeV",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Controller",
+                "dependencyProfile": "Transit"
+            }
+          }
+        }
+      ],
+      "edges": [
+        {
+          "data": {
+            "id": "edge1",
+            "label": "calls",
+            "source": "nodeA",
+            "target": "nodeB",
+            "properties": {}
+          }
+        },
+        {
+          "data": {
+            "id": "edge2",
+            "label": "calls",
+            "source": "nodeA",
+            "target": "nodeD",
+            "properties": {}
+          }
+        },
+        {
+            "data": {
+              "id": "edge3",
+              "label": "calls",
+              "source": "nodeB",
+              "target": "nodeC",
+              "properties": {}
+            }
+        }
+      ]
+    }
+  }

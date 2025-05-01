@@ -3,7 +3,7 @@
 <head>
   <title>Test Custom Layout</title>
   <script src="https://unpkg.com/cytoscape@3.24.0/dist/cytoscape.min.js"></script>
-  <script src="./src/layout.js"></script>
+  <script type="module" src="./src/layout.js"></script>
   <style>
     #cy {
       width: 100%;
@@ -16,8 +16,11 @@
 <body>
   <h2>Custom Layout Test</h2>
   <div id="cy"></div>
-  <script>
-    fetch('./test/data/small.json')
+  <script type="module">
+    import SemanticGridLayout from './src/layout.js';
+    cytoscape.use(SemanticGridLayout);
+    
+    fetch('./test/data/small copy 2.json')
       .then(res => res.json())
       .then(data => {
   console.log('Running semanticGrid layout with', data.elements);
@@ -64,6 +67,10 @@
     // Jalankan layout setelah Cytoscape siap
     cy.layout({
       name: 'semanticGrid',
+      xDimension: "properties.roleStereotype",
+      yDimension: "properties.dependencyProfile",
+      xCategories: ["Controller", "Coordinator", "Service"],
+      yCategories: ["Inbound", "Transit", "Outbound"],
       spacing: 120,
       ready: () => {
         console.log('Custom layout ready.');

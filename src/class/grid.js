@@ -7,9 +7,8 @@ export default class Grid {
         this.yDimension = options.yDimension
         this.xCategories = options?.xCategories || this.getCategories(this.xDimension);
         this.yCategories = options?.yCategories || this.getCategories(this.yDimension);
-        this.xPadding = options?.xPadding || 100,
-        this.yPadding = options?.yPadding || 75
-        this.xDim
+        this.xPadding = options.xPadding,
+        this.yPadding = options.yPadding
         this.nodes = options.cy.nodes()
         this.cells = {};
 
@@ -84,7 +83,6 @@ export default class Grid {
 
     updateCellsPosition() {
         this.sizeMatrix = this.getCellSizeMatrix();
-        console.log("new Size matrix", this.sizeMatrix)
 
         let prevPos = { x: 0, y: 0 };
         let prevSize = { width: 0, height: 0 };

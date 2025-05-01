@@ -1,6 +1,3 @@
-const NODE_SPACING_X = 40
-const NODE_SPACING_Y = 30
-
 export default class Cell {
     constructor(xCategory, yCategory) {
         this.xCategory = xCategory;

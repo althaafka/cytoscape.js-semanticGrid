@@ -1,6 +1,6 @@
 import cytoscape from 'cytoscape';
 import cola from 'cytoscape-cola';
-import { getNodeCategory } from './utils';
+import { createLabels, createLines } from './utils';
 import Grid from './class/grid';
 
 cytoscape.use(cola);
@@ -12,8 +12,6 @@ function SemanticGridLayout(options) {
         gridLineColor: '#666666',
         labelColor: '#666666',
         labelFontSize: 12,
-        xSpacing: 200,
-        ySpacing: 150,
         xPadding: 100,
         yPadding: 75
     },options);
@@ -31,22 +29,20 @@ SemanticGridLayout.prototype.run = function() {
 
   Object.entries(grid.cells).forEach(([_, yCells]) => {
     Object.entries(yCells).reverse().forEach(([_, cell]) => {
-      layoutPromises.push(this.runLayoutWithoutBoundingBox(cell, options, grid));
+      layoutPromises.push(this.runLayout(cell, options, grid));
     });
   });
 
   Promise.all(layoutPromises).then(() => {
     grid.updateCellsPosition()
-    console.log("final grid", grid)
 
-    // Geser node ke posisi cell yang sudah diperbarui
     Object.entries(grid.cells).forEach(([_, yCells]) => {
       Object.entries(yCells).forEach(([_, cell]) => {
         const eles = cy.collection(cell.nodes);
         const bounds = eles.boundingBox();
       
-        const dx = cell.position.x - bounds.x1 + 100; // padding
-        const dy = cell.position.y - bounds.y1 + 75;
+        const dx = cell.position.x - bounds.x1 + options.xPadding;
+        const dy = cell.position.y - bounds.y1 + options.yPadding;
       
         eles.positions(node => {
           const pos = node.position();
@@ -81,9 +77,8 @@ SemanticGridLayout.prototype.run = function() {
 
 
 
-SemanticGridLayout.prototype.runLayoutWithoutBoundingBox = function(cell, options, grid) {
+SemanticGridLayout.prototype.runLayout = function(cell, options, grid) {
   const cy = this.options.cy;
-  const padding = 20;
   const eles = cy.collection(cell.nodes);
 
   return new Promise(resolve => {
@@ -91,7 +86,6 @@ SemanticGridLayout.prototype.runLayoutWithoutBoundingBox = function(cell, option
       name: 'cola',
       avoidOverlap: true,
       nodeSpacing: node => 0,
-      edgeLength: 60,
       maxSimulationTime: 1500
     });
 
@@ -103,10 +97,6 @@ SemanticGridLayout.prototype.runLayoutWithoutBoundingBox = function(cell, option
       cell.size.width = bounds.w;
       cell.size.height = bounds.h;
 
-      console.log("cell:", cell)
-      console.log("bound:", bounds)
-
-
       eles.positions(node => {
         const pos = node.position();
         return {
@@ -115,7 +105,7 @@ SemanticGridLayout.prototype.runLayoutWithoutBoundingBox = function(cell, option
         };
       });
 
-      resolve(); // ✅ Promise selesai
+      resolve();
     });
   });
 };
@@ -129,10 +119,7 @@ SemanticGridLayout.prototype.removeExistingGridElements = function() {
 };
 
 SemanticGridLayout.prototype.addGridLabels = function(xCategories, yCategories, options, grid) {
-  console.log("grid", grid.sizeMatrix)
   const cy = this.options.cy;
-  const xSpacing = options.xSpacing;
-  const ySpacing = options.ySpacing;
 
   let totalHeight = 0;
   Object.keys(grid.sizeMatrix[xCategories[0]]).forEach((col) => {
@@ -140,42 +127,20 @@ SemanticGridLayout.prototype.addGridLabels = function(xCategories, yCategories, 
   })
   totalHeight = grid.cells[xCategories[0]][yCategories[yCategories.length-1]].position.y + grid.cells[xCategories[0]][yCategories[yCategories.length-1]].size.height
 
-  console.log('Total Height:', totalHeight);
-
   xCategories.forEach((cat, xIndex) => {
-    cy.add({
-      group: 'nodes',
-      data: {
-        id: `x-label-${xIndex}`,
-        label: cat,
-        type: 'semantic-grid-label',
-        labelType: 'x-axis'
-      },
-      position: {
-        x: grid.cells[cat][yCategories[0]].position.x + (grid.cells[cat][yCategories[0]].size.width) /2,
-        y: totalHeight + 30
-      },
-      selectable: false,
-      grabbable: false
-    })
+    const position = {
+      x: grid.cells[cat][yCategories[0]].position.x + (grid.cells[cat][yCategories[0]].size.width) /2,
+      y: totalHeight + 30
+    }
+    cy.add(createLabels(`x-label-${xIndex}`, cat, position))
   })
 
   yCategories.forEach((cat, yIndex) => {
-    cy.add({
-      group: 'nodes',
-      data: {
-        id: `y-label-${yIndex}`,
-        label: cat,
-        type: 'semantic-grid-label',
-        labelType: 'y-axis'
-      },
-      position: {
-        x: -100,
-        y: grid.cells[xCategories[0]][cat].position.y + ((grid.cells[xCategories[0]][cat].size.height) / 2)
-      },
-      selectable: false,
-      grabbable: false
-    })
+    const position = {
+      x: -100,
+      y: grid.cells[xCategories[0]][cat].position.y + ((grid.cells[xCategories[0]][cat].size.height) / 2)
+    }
+    cy.add(createLabels(`y-label-${yIndex}`, cat, position))
   })
 
   cy.style()
@@ -195,8 +160,6 @@ SemanticGridLayout.prototype.addGridLabels = function(xCategories, yCategories, 
 SemanticGridLayout.prototype.addGridLines = function(xCategories, yCategories, options, grid) {
   console.log("grid lines")
   const cy = this.options.cy;
-  const xSpacing = options.xSpacing;
-  const ySpacing = options.ySpacing;
 
   // Define grid line styles in the stylesheet
   cy.style()
@@ -230,46 +193,16 @@ SemanticGridLayout.prototype.addGridLines = function(xCategories, yCategories, o
   xCategories.forEach((xCat, xIndex) => {
     const xPos = grid.cells[xCat][yCategories[0]].position.x;
 
-    // console.log('xPos:', xPos);
+    cy.add(
+      createLines(
+        `vertical-line-${xIndex}-start`, 
+        `vertical-line-${xIndex}-end`,
+        `vertical-line-edge-${xIndex}`, 
+        {x: xPos, y: 0},
+        {x: xPos, y: totalHeight+60}
+      )
+    )
 
-    cy.add([
-      {
-        group: 'nodes',
-        data: { 
-          id: `vertical-line-${xIndex}-start`,
-          type: 'semantic-grid-line'
-        },
-        position: { 
-          x: xPos,
-          y: 0
-        },
-        selectable: false,
-        grabbable: false
-      },
-      {
-        group: 'nodes',
-        data: { 
-          id: `vertical-line-${xIndex}-end`,
-          type: 'semantic-grid-line'
-         },
-        position: { 
-          x: xPos, 
-          y: totalHeight + 60
-        },
-        selectable: false,
-        grabbable: false
-      },
-      {
-        group: 'edges',
-        data: {
-          id: `vertical-line-edge-${xIndex}`,
-          source: `vertical-line-${xIndex}-start`,
-          target: `vertical-line-${xIndex}-end`,
-          type: 'semantic-grid-line',
-          label: ""
-        },
-      }
-    ]);
   });
 
   let totalWidth = 0;
@@ -279,50 +212,18 @@ SemanticGridLayout.prototype.addGridLines = function(xCategories, yCategories, o
 
   // Add horizontal grid lines
   yCategories.forEach((yCat, yIndex) => {
-    console.log('yCat:', yCat);
     const cell = grid.cells[xCategories[0]][yCat];
     const yPos = cell.position.y  + cell.size.height;
 
-    console.log('yPos:', yPos);
-
-    cy.add([
-      {
-        group: 'nodes',
-        data: { 
-          id: `horizontal-line-${yIndex}-start`,
-          type: 'semantic-grid-line'
-        },
-        position: { 
-          x: -60, 
-          y: yPos
-        },
-        selectable: false,
-        grabbable: false
-      },
-      {
-        group: 'nodes',
-        data: { 
-          id: `horizontal-line-${yIndex}-end`,
-          type: 'semantic-grid-line'
-        },
-        position: { 
-          x: totalWidth,
-          y: yPos
-        },
-        selectable: false,
-        grabbable: false
-      },
-      {
-        group: 'edges',
-        data: {
-          id: `horizontal-line-edge-${yIndex}`,
-          source: `horizontal-line-${yIndex}-start`,
-          target: `horizontal-line-${yIndex}-end`,
-          type: 'semantic-grid-line',
-          label: ""
-        },
-      }
-    ]);
+    cy.add(
+      createLines(
+        `horizontal-line-${yIndex}-start`,
+        `horizontal-line-${yIndex}-end`,
+        `horizontal-line-edge-${yIndex}`,
+        {x: -60, y: yPos},
+        {x: totalWidth, y: yPos}
+      )
+    )
   });
 };
 

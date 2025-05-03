@@ -13,7 +13,7 @@ function SemanticGridLayout(options) {
         labelColor: '#666666',
         labelFontSize: 12,
         xPadding: 100,
-        yPadding: 75
+        yPadding: 75,
     },options);
 }
   
@@ -59,7 +59,9 @@ SemanticGridLayout.prototype.run = function() {
   });
 };
 
-
+SemanticGridLayout.prototype.destroy = function() {
+  this.removeExistingGridElements();
+}
 
 SemanticGridLayout.prototype.runLayout = function(cell, options, grid) {
   const cy = this.options.cy;
@@ -155,7 +157,6 @@ SemanticGridLayout.prototype.addGridLabels = function(xCategories, yCategories, 
 }
 
 SemanticGridLayout.prototype.addGridLines = function(xCategories, yCategories, options, grid) {
-  console.log("grid lines")
   const cy = this.options.cy;
 
   // Define grid line styles in the stylesheet
@@ -181,10 +182,7 @@ SemanticGridLayout.prototype.addGridLines = function(xCategories, yCategories, o
     })
     .update();
 
-  let totalHeight = 0;
-  Object.keys(grid.sizeMatrix[xCategories[0]]).forEach((col) => {
-      totalHeight += grid.sizeMatrix[xCategories[0]][col].height;
-  })
+  const totalHeight = grid.getTotalHeight()
 
   // Add vertical grid lines
   xCategories.forEach((xCat, xIndex) => {
@@ -206,7 +204,7 @@ SemanticGridLayout.prototype.addGridLines = function(xCategories, yCategories, o
 
   // Add horizontal grid lines
   yCategories.forEach((yCat, yIndex) => {
-    const cell = grid.cells[xCategories[0]][yCat];
+    const cell = grid.getCell(undefined, yCat)
     const yPos = cell.position.y + cell.size.height;
 
     cy.add(

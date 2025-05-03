@@ -15,11 +15,11 @@ export default class Grid {
     constructor(options) {
         this.xDimension = options.xDimension
         this.yDimension = options.yDimension
+        this.nodes = options.cy.nodes()
         this.xCategories = options?.xCategories || this.getCategories(this.xDimension);
         this.yCategories = options?.yCategories || this.getCategories(this.yDimension);
         this.xPadding = options.xPadding,
         this.yPadding = options.yPadding
-        this.nodes = options.cy.nodes()
         this.cells = {};
 
         console.log('X Categories:', this.xCategories);
@@ -42,11 +42,11 @@ export default class Grid {
         });
     }
 
-    getCategories(nodes, dimension) {
+    getCategories(dimension) {
         var categories = new Set();
         
-        nodes.forEach(node => {
-          const category = this.getNodeProperty(node, dimension);
+        this.nodes.forEach(node => {
+          const category = getNodeCategory(node, dimension);
           if (category !== null) {
             categories.add(category);
           }

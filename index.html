@@ -20,7 +20,7 @@
     import SemanticGridLayout from './src/layout.js';
     cytoscape.use(SemanticGridLayout);
     
-    fetch('./test/data/small copy 2.json')
+    fetch('./test/data/multi-label-test.json')
       .then(res => res.json())
       .then(data => {
   console.log('Running semanticGrid layout with', data.elements);
@@ -63,14 +63,18 @@
 
   cy.ready(() => {
     console.log('Cytoscape ready. Nodes count:', cy.nodes().length);
+    const changedNode = cy.getElementById('nodeG')
+    changedNode.style({display: 'none'})
 
     // Jalankan layout setelah Cytoscape siap
     cy.layout({
       name: 'semanticGrid',
+      // xDimension: "properties.methodCount",
       xDimension: "properties.roleStereotype",
       yDimension: "properties.dependencyProfile",
-      xCategories: ["Controller", "Coordinator", "Service"],
-      yCategories: ["Inbound", "Transit", "Outbound"],
+      // yDimension: "properties.dependencyProfile",
+      yCategories: ["Hidden", "Inbound", "Transit", "Outbound"],
+      rangeStep: {x: 1.5, y:null},
       spacing: 120,
       ready: () => {
         console.log('Custom layout ready.');

@@ -1,0 +1,214 @@
+{
+    "elements": {
+      "nodes": [
+        {
+          "data": {
+            "id": "S1",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Interfacer",
+                "dependencyProfile": "Inbound"
+            },
+            "parent": "C2"
+          }
+        },
+        {
+          "data": {
+            "id": "S2",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Interfacer",
+                "dependencyProfile": "Inbound"
+            },
+            "parent": "C2"
+          }
+        },
+        {
+          "data": {
+            "id": "S3",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Coordinator",
+                "dependencyProfile": "Outbound"
+            }
+          }
+        },
+        {
+          "data": {
+            "id": "S4",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Inbound",
+                "dependencyProfile": "Transit"
+            },
+            "parent": "C1"
+          }
+        },
+        {
+          "data": {
+            "id": "S5",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Controller",
+                "dependencyProfile": "Inbound"
+            },
+            "parent": "C1"
+          }
+        },
+        {
+          "data": {
+            "id": "S6",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Service Provider",
+                "dependencyProfile": "Transit"
+            },
+            "parent": "C3"
+          }
+        },
+                {
+          "data": {
+            "id": "S7",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Service Provider",
+                "dependencyProfile": "Transit"
+            },
+            "parent": "C5"
+          }
+        },
+                {
+          "data": {
+            "id": "S8",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Service Provider",
+                "dependencyProfile": "Transit"
+            },
+            "parent": "C5"
+          }
+        },
+                {
+          "data": {
+            "id": "S9",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Service Provider",
+                "dependencyProfile": "Hidden"
+            },
+            "parent": "C4"
+          }
+        },
+                {
+          "data": {
+            "id": "S10",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Service Provider",
+                "dependencyProfile": "Hidden"
+            },
+            "parent": "C4"
+          }
+        },
+        {
+          "data": {
+            "id": "S11",
+            "labels": [
+              "Structure"
+            ],
+            "properties": {
+                "roleStereotype": "Service Provider",
+                "dependencyProfile": "Hidden"
+            },
+            "parent": "C4"
+          }
+        },
+        {
+          "data": {
+            "id": "C1",
+            "labels": [
+              "Container"
+            ],
+            "properties": {
+                "roleStereotype": "Structurer",
+                "dependencyProfile": "Hidden"
+            }
+          }
+        },
+        {
+          "data": {
+            "id": "C2",
+            "labels": [
+              "Container"
+            ],
+            "properties": {
+                "roleStereotype": "Structurer",
+                "dependencyProfile": "Inbound"
+            }
+          }
+        }, 
+                {
+          "data": {
+            "id": "C3",
+            "labels": [
+              "Container"
+            ],
+            "properties": {
+                "roleStereotype": "Structurer",
+                "dependencyProfile": "Transit"
+            },
+            "parent": "C1"
+          }
+        },
+                        {
+          "data": {
+            "id": "C4",
+            "labels": [
+              "Container"
+            ],
+            "properties": {
+                "roleStereotype": "Structurer",
+                "dependencyProfile": "Hidden"
+            },
+            "parent": "C1"
+          }
+        },
+                        {
+          "data": {
+            "id": "C5",
+            "labels": [
+              "Container"
+            ],
+            "properties": {
+                "roleStereotype": "Structurer",
+                "dependencyProfile": "Transit"
+            },
+            "parent": "C3"
+          }
+        }
+
+      ],
+      "edges": [
+      ]
+    }
+  }

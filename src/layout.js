@@ -14,6 +14,9 @@ function SemanticGridLayout(options) {
         labelFontSize: 12,
         xPadding: 100,
         yPadding: 75,
+        rangeCount: {x: null, y: null},
+        rangeStep: {x: null, y: null},
+        rangeStart: {x: null, y: null}
     },options);
 }
   
@@ -126,20 +129,53 @@ SemanticGridLayout.prototype.addGridLabels = function(xCategories, yCategories, 
 
   xCategories.forEach((cat, xIndex) => {
     const cell = grid.getCell(cat, undefined)
-    const position = {
-      x: cell.position.x + (cell.size.width) /2,
-      y: totalHeight + 30
+    let position;
+    let label
+
+    if (grid.isXNumeric) {
+      const tempLabel = cy.add(createLabels(`temp-x-label-${xIndex}`, cat, { x: 0, y: 0 }));
+      const labelWidth = tempLabel.width()
+      tempLabel.remove()
+      label = cat.split('-')[0];
+
+      position = {
+        x: cell.position.x + (labelWidth + 10),
+        y: totalHeight + 30
+      }
+    } else {
+      label = cat
+      position = {
+        x: cell.position.x + (cell.size.width) /2,
+        y: totalHeight + 30
+      }
     }
-    cy.add(createLabels(`x-label-${xIndex}`, cat, position))
+    cy.add(createLabels(`x-label-${xIndex}`, label, position))
   })
 
   yCategories.forEach((cat, yIndex) => {
     const cell = grid.getCell(undefined, cat)
-    const position = {
-      x: -100,
-      y: cell.position.y + (cell.size.height/2)
+    let position;
+    let label;
+    if (grid.isYNumeric) {
+      const tempLabel = cy.add(createLabels(`temp-y-label-${yIndex}`, cat, { x: 0, y: 0 }));
+      const labelHeight = tempLabel.height()
+      const labelWidth = tempLabel.width()
+      tempLabel.remove()
+      label = cat.split('-')[0];
+
+      position = {
+        x: 0 - labelWidth - 10,
+        y: cell.position.y + (cell.size.height) - (labelHeight/2)
+      }
+    } else {
+      label = cat
+      position = {
+        x: -100,
+        y: cell.position.y + (cell.size.height/2)
+      }
     }
-    cy.add(createLabels(`y-label-${yIndex}`, cat, position))
+
+    cy.add(createLabels(`y-label-${yIndex}`, label, position))
   })
 
   cy.style()

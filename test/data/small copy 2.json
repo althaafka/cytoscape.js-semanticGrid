@@ -9,7 +9,8 @@
             ],
             "properties": {
                 "roleStereotype": "Controller",
-                "dependencyProfile": "Outbound"
+                "dependencyProfile": "Outbound",
+                "methodCount": 3
             }
           }
         },
@@ -21,7 +22,9 @@
             ],
             "properties": {
                 "roleStereotype": "Coordinator",
-                "dependencyProfile": "Transit"
+                "dependencyProfile": "Transit",
+                "methodCount": 5
+
             }
           }
         },
@@ -33,7 +36,8 @@
             ],
             "properties": {
                 "roleStereotype": "Coordinator",
-                "dependencyProfile": "Inbound"
+                "dependencyProfile": "Inbound",
+                "methodCount": 1
             },
             "parent": "nodeParent"
           }
@@ -46,7 +50,8 @@
             ],
             "properties": {
                 "roleStereotype": "Service",
-                "dependencyProfile": "Inbound"
+                "dependencyProfile": "Inbound",
+                "methodCount": 6
             }
           }
         },
@@ -58,7 +63,8 @@
             ],
             "properties": {
                 "roleStereotype": "Coordinator",
-                "dependencyProfile": "Inbound"
+                "dependencyProfile": "Inbound",
+                "methodCount": 6
             }
           }
         },
@@ -70,7 +76,8 @@
             ],
             "properties": {
                 "roleStereotype": "Coordinator",
-                "dependencyProfile": "Inbound"
+                "dependencyProfile": "Inbound",
+                "methodCount": 8
             }
           }
         },
@@ -82,7 +89,8 @@
             ],
             "properties": {
                 "roleStereotype": "Coordinator",
-                "dependencyProfile": "Inbound"
+                "dependencyProfile": "Inbound",
+                "methodCount": 3.5
             }
           }
         },
@@ -94,7 +102,8 @@
             ],
             "properties": {
                 "roleStereotype": "Coordinator",
-                "dependencyProfile": "Inbound"
+                "dependencyProfile": "Inbound",
+                "methodCount": 3
             }
           }
         },
@@ -106,7 +115,8 @@
             ],
             "properties": {
                 "roleStereotype": "Controller",
-                "dependencyProfile": "Transit"
+                "dependencyProfile": "Transit",
+                "methodCount": 2
             }
           }
         },
@@ -118,7 +128,8 @@
             ],
             "properties": {
                 "roleStereotype": "Controller",
-                "dependencyProfile": "Transit"
+                "dependencyProfile": "Transit",
+                "methodCount": 3
             },
             "parent": "nodeParent"
           }
@@ -131,7 +142,8 @@
             ],
             "properties": {
                 "roleStereotype": "Controller",
-                "dependencyProfile": "Transit"
+                "dependencyProfile": "Transit",
+                "methodCount": 11
             }
           }
         },
@@ -143,20 +155,17 @@
             ],
             "properties": {
                 "roleStereotype": "Controller",
-                "dependencyProfile": "Transit"
+                "dependencyProfile": "Transit",
+                "methodCount": 9
             }
           }
         },
         {
           "data": {
-            "id": "nodeN",
+            "id": "nodeUnknown",
             "labels": [
               "Structure"
-            ],
-            "properties": {
-                "roleStereotype": "Controller",
-                "dependencyProfile": "Transit"
-            }
+            ]
           }
         },
         {
@@ -167,7 +176,8 @@
             ],
             "properties": {
                 "roleStereotype": "Controller",
-                "dependencyProfile": "Transit"
+                "dependencyProfile": "Transit",
+                "methodCount": 7
             }
           }
         },
@@ -179,7 +189,8 @@
             ],
             "properties": {
                 "roleStereotype": "Controller",
-                "dependencyProfile": "Transit"
+                "dependencyProfile": "Transit",
+                "methodCount": 3
             }
           }
         },        
@@ -191,7 +202,8 @@
             ],
             "properties": {
                 "roleStereotype": "Controller",
-                "dependencyProfile": "Transit"
+                "dependencyProfile": "Transit",
+                "methodCount": 3
             }
           }
         },
@@ -203,7 +215,8 @@
             ],
             "properties": {
                 "roleStereotype": "Controller",
-                "dependencyProfile": "Transit"
+                "dependencyProfile": "Transit",
+                "methodCount": 11
             }
           }
         },      
@@ -215,7 +228,8 @@
             ],
             "properties": {
                 "roleStereotype": "Controller",
-                "dependencyProfile": "Transit"
+                "dependencyProfile": "Transit",
+                "methodCount": 3
             }
           }
         },      
@@ -227,7 +241,8 @@
             ],
             "properties": {
                 "roleStereotype": "Controller",
-                "dependencyProfile": "Transit"
+                "dependencyProfile": "Transit",
+                "methodCount": 3
             }
           }
         },      
@@ -239,7 +254,8 @@
             ],
             "properties": {
                 "roleStereotype": "Controller",
-                "dependencyProfile": "Transit"
+                "dependencyProfile": "Transit",
+                "methodCount": 3.5
             }
           }
         },      
@@ -251,7 +267,8 @@
             ],
             "properties": {
                 "roleStereotype": "Controller",
-                "dependencyProfile": "Transit"
+                "dependencyProfile": "Transit",
+                "methodCount": 4
             }
           }
         },      
@@ -263,7 +280,8 @@
             ],
             "properties": {
                 "roleStereotype": "Controller",
-                "dependencyProfile": "Transit"
+                "dependencyProfile": "Transit",
+                "methodCount": 4
             }
           }
         },      
@@ -275,7 +293,8 @@
             ],
             "properties": {
                 "roleStereotype": "Controller",
-                "dependencyProfile": "Transit"
+                "dependencyProfile": "Transit",
+                "methodCount": 11.1
             }
           }
         },      
@@ -287,7 +306,8 @@
             ],
             "properties": {
                 "roleStereotype": "Controller",
-                "dependencyProfile": "Transit"
+                "dependencyProfile": "Transit",
+                "methodCount": 9
             }
           }
         }

@@ -63,12 +63,15 @@ export default class Grid {
         });
 
 
+        this.unassignedNodes = [];
         this.nodes.forEach(node => {
             const xCategory = !this.isXNumeric? getNodeCategory(node, this.xDimension) : this.getNodeNumericalCategory(node, 'x');
             const yCategory = !this.isYNumeric? getNodeCategory(node, this.yDimension) : this.getNodeNumericalCategory(node, 'y');
 
             if (this.cells[xCategory] && this.cells[xCategory][yCategory]) {
                 this.cells[xCategory][yCategory].nodes.push(node);
+            } else {
+                this.unassignedNodes.push(node);
             }
         });
     }
@@ -203,6 +206,7 @@ export default class Grid {
             prevSize.height = 0;
             prevSize.width += size.width;
         });
+        console.log("CELLS:", this.cells)
     }
 
     isNumeric(value) {

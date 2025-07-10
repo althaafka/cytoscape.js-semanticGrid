@@ -27,38 +27,73 @@ SemanticGridLayout.prototype.run = function() {
   cy.trigger('layoutstart');
 
   const grid = new Grid(options);
-
   const layoutPromises = [];
 
+  // Jalankan layout cola untuk setiap cell
   grid.forEachCell(cell => {
     layoutPromises.push(this.runLayout(cell, options, grid));
-  })
+  });
 
   Promise.all(layoutPromises).then(() => {
-    grid.updateCellsPosition()
+    grid.updateCellsPosition();
 
-    cy.batch(() => {
+    const unassignedEles = cy.collection(grid.unassignedNodes);
 
-      grid.forEachCell(cell => {
-        this.shiftNodesToCell(cell,options)
-      })
+    if (unassignedEles.length > 0) {
+      const unassignedLayout = unassignedEles.layout({
+        name: 'cola',
+        avoidOverlap: true,
+        nodeSpacing: 10,
+        maxSimulationTime: 1500
+      });
 
-      this.removeExistingGridElements();
+      unassignedLayout.run();
 
-      if (options.showGridLabels) {
-        this.addGridLabels(grid.xCategories, [...grid.yCategories].reverse(), options, grid);
-      }
+      unassignedLayout.once('layoutstop', () => {
+        const bounds = unassignedEles.boundingBox();
 
-      if (options.showGridLines) {
-        this.addGridLines(grid.xCategories, [...grid.yCategories].reverse(), options, grid);
-      }
-    });
+        // Geser ke pojok kanan atas
+        const dx = grid.getTotalWidth() + options.xPadding * 2 - bounds.x1;
+        const dy = 0 - bounds.y1;
 
-    if (typeof options.ready === 'function') {
-      options.ready();
+        unassignedEles.positions(node => {
+          const pos = node.position();
+          return {
+            x: pos.x + dx,
+            y: pos.y + dy
+          };
+        });
+
+        finalize.call(this); // panggil dengan konteks this yang benar
+      });
+    } else {
+      finalize.call(this);
     }
 
-    cy.trigger('layoutstop');
+    function finalize() {
+      cy.batch(() => {
+        // Geser semua node kategori ke posisi cell-nya
+        grid.forEachCell(cell => {
+          this.shiftNodesToCell(cell, options);
+        });
+
+        this.removeExistingGridElements();
+
+        if (options.showGridLabels) {
+          this.addGridLabels(grid.xCategories, [...grid.yCategories].reverse(), options, grid);
+        }
+
+        if (options.showGridLines) {
+          this.addGridLines(grid.xCategories, [...grid.yCategories].reverse(), options, grid);
+        }
+      });
+
+      if (typeof options.ready === 'function') {
+        options.ready();
+      }
+
+      cy.trigger('layoutstop');
+    }
   });
 };
 
